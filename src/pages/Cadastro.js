@@ -2,6 +2,7 @@ import { useState } from "react";
 import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import { Link, useNavigate } from "react-router-dom";
 
 function Cadastro() {
   const [email, setEmail] = useState("");
@@ -9,6 +10,7 @@ function Cadastro() {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
+  const navigate = useNavigate();
 
   async function handleCadastro() {
     try {
@@ -24,6 +26,9 @@ function Cadastro() {
       });
 
       alert("Usuário cadastrado!");
+
+      // 🔥 NOVO → volta pro login
+      navigate("/");
     } catch (error) {
       alert(error.message);
     }
@@ -40,6 +45,11 @@ function Cadastro() {
       <input type="date" onChange={(e) => setDataNascimento(e.target.value)} />
 
       <button onClick={handleCadastro}>Cadastrar</button>
+
+      {/* 🔥 NOVO */}
+      <p>
+        Já tem conta? <Link to="/">Fazer login</Link>
+      </p>
     </div>
   );
 }
